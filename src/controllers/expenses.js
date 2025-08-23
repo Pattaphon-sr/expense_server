@@ -10,11 +10,16 @@ async function createExpense(req, res) {}
 
 async function deleteExpense(req, res) {
   const { id } = req.params;
+  const { userId } = req.body;
   try {
     const con = await getConnection();
-    const [results] = await con.execute("DELETE FROM `expenses` WHERE id = ?", [id]);
+    const [rows] = await con.execute("SELECT * FROM `expenses` WHERE id = ? AND user_id = ?", [id, userId]);
+    if (rows.length === 0) {
+      return res.status(404).send("Expense not found or not owned by user");
+    }
+    const [results] = await con.execute("DELETE FROM `expenses` WHERE id = ? AND user_id = ?", [id, userId]);
     if (results.affectedRows === 0) {
-      return res.status(404).send("Expense not found");
+      return res.status(404).send("Expense not found or not owned by user");
     }
     res.send("Expense deleted successfully");
   } catch (err) {
