@@ -11,7 +11,7 @@ const router = Router();
 
 router.get('/expenses', listAll);
 router.get('/expenses/today', listToday);
-router.get('/expenses/search', searchItems);
+router.post('/expenses/search', searchItems);
 router.post('/expenses', createExpense);
 router.delete('/expenses/:id', deleteExpense);
 
