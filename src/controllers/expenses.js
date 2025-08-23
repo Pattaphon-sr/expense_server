@@ -19,7 +19,7 @@ async function deleteExpense(req, res) {
     }
     const [results] = await con.execute("DELETE FROM `expenses` WHERE id = ? AND user_id = ?", [id, userId]);
     if (results.affectedRows === 0) {
-      return res.status(404).send("Expense not found or not owned by user");
+      return res.status(404).send("Please input the correct id!");
     }
     res.send("Expense deleted successfully");
   } catch (err) {
