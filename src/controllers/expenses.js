@@ -22,9 +22,6 @@ async function searchItems(req, res) {
   }
 }
 
-async function createExpense(req, res) { }
-async function searchItems(req, res) {}
-
 async function createExpense(req, res) {
   const { userId, item, paid } = req.body;
   if (!userId || !item || paid === undefined) {
