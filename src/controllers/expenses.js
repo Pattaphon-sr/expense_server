@@ -1,6 +1,22 @@
 const { getConnection } = require("../config/db.js");
 
-async function listAll(req, res) { }
+async function listAll(req, res) { 
+  // Use userId from request body or query to list all expenses
+  const userId = req.body?.userId || req.query?.userId;  
+  if (!userId) {
+    return res.status(404).json({ error: "userId is required in body or query" });
+  }
+  try {
+    const connection = await getConnection();
+    const [results] = await connection.execute(
+      "SELECT * FROM expenses WHERE user_id = ?",
+      [userId]
+    );
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
 async function listToday(req, res) { }
 
