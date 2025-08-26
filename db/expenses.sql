@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Aug 23, 2025 at 10:55 AM
+-- Generation Time: Aug 26, 2025 at 11:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,8 +32,19 @@ CREATE TABLE `expenses` (
   `user_id` smallint(5) UNSIGNED NOT NULL,
   `item` varchar(50) NOT NULL,
   `paid` mediumint(9) NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `user_id`, `item`, `paid`, `date`) VALUES
+(2, 1, 'lunch', 50, '2025-08-23 15:59:13'),
+(3, 1, 'bun', 80, '2025-08-26 01:26:44'),
+(4, 2, 'lunch', 50, '2025-08-26 16:21:30'),
+(6, 2, 'bun', 20, '2025-08-26 16:37:13'),
+(7, 2, 'rent', 1600, '2025-08-26 16:37:37');
 
 -- --------------------------------------------------------
 
@@ -80,7 +91,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
