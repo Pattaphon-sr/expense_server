@@ -18,7 +18,24 @@ async function listAll(req, res) {
   }
 }
 
-async function listToday(req, res) { }
+async function listToday(req, res) {
+  const userId = req.body?.userId || req.query?.userId;
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required in body or query" });
+  }
+
+  try {
+    const connection = await getConnection();
+    const [results] = await connection.execute(
+      "SELECT * FROM expenses WHERE user_id = ? AND DATE(date) = CURDATE()",
+      [userId]
+    );
+    res.json(results);
+  } catch (error) {
+    console.error("listToday error:", error);
+    res.status(500).json({ error: "Database error" });
+  }
+}
 
 async function searchItems(req, res) {
   // Use userId and name from request body for search
